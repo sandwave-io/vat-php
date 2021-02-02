@@ -8,6 +8,7 @@
          beStrictAboutCoversAnnotation="true"
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTodoAnnotatedTests="true"
+         colors="true"
          failOnRisky="true"
          failOnWarning="true"
          verbose="true">
