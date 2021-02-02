@@ -1,9 +1,10 @@
 [![](https://user-images.githubusercontent.com/60096509/91668964-54ecd500-eb11-11ea-9c35-e8f0b20b277a.png)](https://sandwave.io)
 
-<center>
-<img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/271/construction-worker_1f477.png" />
-<strong>This project is under construction</strong>
-</center>
+<p align="center">
+  <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/271/construction-worker_1f477.png" />
+  <br />
+  <strong>This project is under construction</strong>
+</p>
 
 
 # European VAT utility for PHP
