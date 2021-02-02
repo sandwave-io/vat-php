@@ -29,4 +29,9 @@ final class Vat
         // TODO: Implement
         return 0.0;
     }
+
+    public function setCountries(Iso2 $countries): void
+    {
+        $this->countries = $countries;
+    }
 }

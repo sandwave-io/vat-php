@@ -2,18 +2,31 @@
 
 namespace SandwaveIo\Vat\Tests;
 
+use Generator;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
+use SandwaveIo\Vat\Countries\Iso2;
 use SandwaveIo\Vat\Vat;
 
-/** @covers Vat */
+/** @covers \SandwaveIo\Vat\Vat */
 class VatServiceTest extends TestCase
 {
-    public function testCountryInEu(): void
+    /** @dataProvider countryTestData */
+    public function testCountryInEu(bool $validCountry, bool $inEu, bool $result): void
     {
         $service = new Vat();
-        Assert::assertEquals(true, $service->countryInEurope('NL'), 'Netherlands should be in the EU.');
-        Assert::assertEquals(false, $service->countryInEurope('OM'), 'Oman should not be in the EU.');
-        Assert::assertEquals(false, $service->countryInEurope('XX'), 'XX is not a valid country.');
+        $mock = $this->createMock(Iso2::class);
+        $mock->method('isCountryValid')->willReturn($validCountry);
+        $mock->method('isCountryInEu')->willReturn($inEu);
+        $service->setCountries($mock);
+
+        Assert::assertEquals($result, $service->countryInEurope('NL'));
+    }
+    public function countryTestData(): Generator
+    {
+        yield [true, true, true];
+        yield [true, false, false];
+        yield [false, true, false];
+        yield [false, false, false];
     }
 }

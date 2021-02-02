@@ -7,10 +7,10 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use SandwaveIo\Vat\Countries\Iso2;
 
-/** @covers Iso2 */
+/** @covers \SandwaveIo\Vat\Countries\Iso2 */
 class ValidateCountriesTest extends TestCase
 {
-    /** @dataProvider countriesProvider */
+    /**  @dataProvider countriesProvider */
     public function testValidateCountries(string $countryCode, bool $valid, bool $inEu): void
     {
         $countries = new Iso2();
