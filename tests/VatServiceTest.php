@@ -22,6 +22,8 @@ class VatServiceTest extends TestCase
 
         Assert::assertEquals($result, $service->countryInEurope('NL'));
     }
+
+    /** @return Generator<array> */
     public function countryTestData(): Generator
     {
         yield [true, true, true];
