@@ -20,3 +20,21 @@ Vat::europeanVatRate("YOURVATNUMBERHERE", "NL"); // 0.0
 
 * [VIES API](https://ec.europa.eu/taxation_customs/vies/technicalInformation.html)
 * [TEDB- "Taxes in Europe" database](https://ec.europa.eu/taxation_customs/economic-analysis-taxation/taxes-europe-database-tedb_en)
+
+## How to contribute
+
+Feel free to create a PR if you have any ideas for improvements. Or create an issue.
+
+* When adding code, make sure to add tests for it (phpunit).
+* Make sure the code adheres to our coding standards (use php-cs-fixer to check/fix).
+* Also make sure PHPStan does not find any bugs.
+
+```bash
+vendor/bin/php-cs-fixer fix
+
+vendor/bin/phpstan analyze
+
+vendor/bin/phpunit --coverage-text
+```
+
+These tools will also run in GitHub actions on PR's and pushes on master.
