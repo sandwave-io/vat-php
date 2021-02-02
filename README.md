@@ -7,13 +7,13 @@
 ## Usage
 
 ```php
-use SandwaveIo\Vat\Vat;
+$vatServcie = new \SandwaveIo\Vat\Vat;
 
-Vat::validateVatNumber("YOURVATNUMBERHERE"); // true
+$vatServcie->validateVatNumber("YOURVATNUMBERHERE"); // true
 
-Vat::countryInEurope('NL'); // true
+$vatServcie->countryInEurope('NL'); // true
 
-Vat::europeanVatRate("YOURVATNUMBERHERE", "NL"); // 0.0
+$vatServcie->europeanVatRate("YOURVATNUMBERHERE", "NL"); // 0.0
 ```
 
 ## External documentation
