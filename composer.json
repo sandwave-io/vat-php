@@ -1,0 +1,34 @@
+{
+    "name": "sandwave-io/vat",
+    "description": "European VAT rates and number validation.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jesse Kramer",
+            "email": "jesse@kramerventures.nl"
+        },
+        {
+            "name": "Armando van Oeffelen",
+            "email": "armando@sandwave.io"
+        },
+        {
+            "name": "Daan Barbiers",
+            "email": "daan@sandwave.io"
+        },
+        {
+            "name": "Thomas Ploegaert",
+            "email": "thomas@sandwave.io"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "phpstan/phpstan": "^0.12.71",
+        "friendsofphp/php-cs-fixer": "^2.18",
+        "uptimeproject/php-cs-fixer-config": "^1.1",
+        "phpstan/phpstan-strict-rules": "^0.12.9"
+    }
+}
