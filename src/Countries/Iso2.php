@@ -5,8 +5,11 @@ namespace SandwaveIo\Vat\Countries;
 class Iso2
 {
     /**
-     * Source: Country.io
+     * Source: Country.io.
+     *
      * @see http://country.io/names.json
+     *
+     * @var array<string,string>
      */
     public static array $countries = [
         'BD' => 'Bangladesh',
@@ -262,8 +265,11 @@ class Iso2
     ];
 
     /**
-     * Source: European Union
+     * Source: European Union.
+     *
      * @see https://europa.eu/european-union/about-eu/countries_en
+     *
+     * @var array<string>
      */
     public static array $countriesInEu = [
         'AT', 'BE', 'BG', 'HR', 'CY', 'CZ',
@@ -280,6 +286,6 @@ class Iso2
 
     public function isCountryInEu(string $countryCode): bool
     {
-        return in_array($countryCode, self::$countriesInEu);
+        return in_array($countryCode, self::$countriesInEu, true);
     }
 }

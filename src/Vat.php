@@ -2,8 +2,17 @@
 
 namespace SandwaveIo\Vat;
 
+use SandwaveIo\Vat\Countries\Iso2;
+
 final class Vat
 {
+    private Iso2 $countries;
+
+    public function __construct()
+    {
+        $this->countries = new Iso2();
+    }
+
     public function validateVatNumber(string $vatNumber): bool
     {
         // TODO: Implement
@@ -12,8 +21,7 @@ final class Vat
 
     public function countryInEurope(string $countryCode): bool
     {
-        // TODO: Implement
-        return true;
+        return $this->countries->isCountryValid($countryCode) && $this->countries->isCountryInEu($countryCode);
     }
 
     public function europeanVatRate(string $vatNumber, string $countryCode): float
