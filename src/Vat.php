@@ -1,7 +1,7 @@
 <?php
 namespace SandwaveIo\Vat;
 
-final class VAT
+final class Vat
 {
     public static function validateVatNumber(string $vatNumber): bool
     {
