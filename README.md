@@ -15,7 +15,10 @@
 
 # European VAT utility for PHP
 
-// TODO: Use badges of this project.
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/sandwave-io/vat-php/CI)](https://packagist.org/packages/sandwave-io/vat)
+[![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/sandwave-io/vat)](https://packagist.org/packages/sandwave-io/vat)
+[![Packagist PHP Version Support](https://img.shields.io/packagist/v/sandwave-io/vat)](https://packagist.org/packages/sandwave-io/vat)
+[![Packagist Downloads](https://img.shields.io/packagist/dt/sandwave-io/vat)](https://packagist.org/packages/sandwave-io/vat)
 
 ## Usage
 
