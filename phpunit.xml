@@ -16,11 +16,11 @@
             <directory suffix="Test.php">tests</directory>
         </testsuite>
     </testsuites>
-    <logging>
-        <log type="coverage-clover" target="clover.xml"/>
-    </logging>
     <coverage cacheDirectory=".phpunit.cache/code-coverage"
               processUncoveredFiles="true">
+        <report>
+            <clover outputFile="clover.xml"/>
+        </report>
         <include>
             <directory suffix=".php">src</directory>
         </include>
