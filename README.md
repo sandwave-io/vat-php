@@ -7,7 +7,13 @@
 ## Usage
 
 ```php
-// TODO
+use SandwaveIo\Vat\VAT;
+
+VAT::validateVatNumber("YOURVATNUMBERHERE"); // true
+
+VAT::countryInEurope('NL'); // true
+
+VAT::europeanVatRate("YOURVATNUMBERHERE", "NL"); // 0.0
 ```
 
 ## External documentation
