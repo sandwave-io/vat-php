@@ -31,11 +31,21 @@ final class Vat
 
     public function europeanVatRate(string $countryCode, ?DateTime $date = null): float
     {
+        if (! $this->countryInEurope($countryCode)) {
+            return 0.0;
+        }
         return $this->vatRateResolver->getDefaultVatRateForCountry($countryCode, $date) ?? 0.0;
     }
 
+    /** @internal */
     public function setCountries(Iso2 $countries): void
     {
         $this->countries = $countries;
+    }
+
+    /** @internal */
+    public function setVatRateResolver(ResolvesVatRates $vatRateResolver): void
+    {
+        $this->vatRateResolver = $vatRateResolver;
     }
 }

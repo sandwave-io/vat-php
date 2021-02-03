@@ -2,31 +2,49 @@
 
 namespace SandwaveIo\Vat\Tests\VatRates;
 
+use Generator;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use SandwaveIo\Vat\VatRates\TaxesEuropeDatabaseClient;
 use SoapClient;
+use SoapFault;
 
 /** @covers \SandwaveIo\Vat\VatRates\TaxesEuropeDatabaseClient */
 class TedbClientTest extends TestCase
 {
-    private object $rates;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->rates = unserialize(include 'rates_snapshot.php');
-    }
-
-    public function testGetRates(): void
+    /** @dataProvider soapTestData */
+    public function testGetRates(?object $rates, ?float $rate): void
     {
         $mockedSoapClient = $this->getMockFromWsdl(TaxesEuropeDatabaseClient::WSDL);
-        $mockedSoapClient->method('__soapCall')->with('retrieveVatRates')->willReturn($this->rates);
+        $mockedSoapClient->method('__soapCall')->with('retrieveVatRates')->willReturn($rates);
 
         /** @var SoapClient $mockedSoapClient */
         $client = new TaxesEuropeDatabaseClient($mockedSoapClient);
 
         $result = $client->getDefaultVatRateForCountry('NL');
-        Assert::assertEquals((float) 21, $result);
+        Assert::assertEquals($rate, $result);
+    }
+
+    public function testGetRatesException(): void
+    {
+        $mockedSoapClient = $this->getMockFromWsdl(TaxesEuropeDatabaseClient::WSDL);
+        $mockedSoapClient->method('__soapCall')
+            ->with('retrieveVatRates')
+            ->willThrowException(new SoapFault('test', 'testtest'));
+
+        /** @var SoapClient $mockedSoapClient */
+        $client = new TaxesEuropeDatabaseClient($mockedSoapClient);
+
+        $result = $client->getDefaultVatRateForCountry('NL');
+        Assert::assertEquals(null, $result);
+    }
+
+    /** @return Generator<array> */
+    public function soapTestData(): Generator
+    {
+        yield [unserialize(include 'rates_snapshot.php'), 21.0];
+        yield [null, null];
+        yield [(object) [], null];
+        yield [(object) ['vatRateResults' => []], null];
     }
 }
