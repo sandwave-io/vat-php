@@ -30,7 +30,7 @@ $vatServcie->validateVatNumber("YOURVATNUMBERHERE"); // true
 
 $vatServcie->countryInEurope('NL'); // true
 
-$vatServcie->europeanVatRate("YOURVATNUMBERHERE", "NL"); // 0.0
+$vatServcie->europeanVatRate("YOURVATNUMBERHERE"); // 0.0
 ```
 
 ## External documentation
