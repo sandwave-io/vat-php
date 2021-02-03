@@ -7,16 +7,22 @@ use SandwaveIo\Vat\Countries\Iso2;
 final class Vat
 {
     private Iso2 $countries;
+    private ViesClient $viesClient;
 
-    public function __construct()
+    public function __construct(?ViesClient $viesClient = null)
     {
         $this->countries = new Iso2();
+        $this->viesClient = $viesClient ?? new ViesClient();
     }
 
-    public function validateVatNumber(string $vatNumber): bool
+    public function validateVatNumber(string $vatNumber, string $countryCode): bool
     {
-        // TODO: Implement
-        return true;
+        // The VIES service is for Europe. Other VAT numbers are not checked and assumed invalid.
+        if (! $this->countryInEurope($countryCode)) {
+            return false;
+        }
+
+        return $this->viesClient->checkVat($vatNumber, $countryCode);
     }
 
     public function countryInEurope(string $countryCode): bool
