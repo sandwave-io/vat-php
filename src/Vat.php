@@ -2,15 +2,20 @@
 
 namespace SandwaveIo\Vat;
 
+use DateTime;
 use SandwaveIo\Vat\Countries\Iso2;
+use SandwaveIo\Vat\VatRates\ResolvesVatRates;
+use SandwaveIo\Vat\VatRates\TaxesEuropeDatabaseClient;
 
 final class Vat
 {
     private Iso2 $countries;
+    private ResolvesVatRates $vatRateResolver;
 
     public function __construct()
     {
         $this->countries = new Iso2();
+        $this->vatRateResolver = new TaxesEuropeDatabaseClient();
     }
 
     public function validateVatNumber(string $vatNumber): bool
@@ -24,10 +29,9 @@ final class Vat
         return $this->countries->isCountryValid($countryCode) && $this->countries->isCountryInEu($countryCode);
     }
 
-    public function europeanVatRate(string $vatNumber, string $countryCode): float
+    public function europeanVatRate(string $countryCode, ?DateTime $date = null): float
     {
-        // TODO: Implement
-        return 0.0;
+        return $this->vatRateResolver->getDefaultVatRateForCountry($countryCode, $date) ?? 0.0;
     }
 
     public function setCountries(Iso2 $countries): void
