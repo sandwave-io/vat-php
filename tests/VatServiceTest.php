@@ -33,7 +33,10 @@ class VatServiceTest extends TestCase
         yield [false, false, false];
     }
 
-    /** @dataProvider vatNumberTestData */
+    /**
+     * @dataProvider vatNumberTestData
+     * @depends testCountryInEu
+     */
     public function testValidateVatNumber(bool $valid, string $vatNumber, string $countryCode, bool $result): void
     {
         $vatVerifyMock = $this->createMock(VerifiesVatNumbers::class);
