@@ -10,10 +10,7 @@ use SoapFault;
 final class TaxesEuropeDatabaseClient implements ResolvesVatRates
 {
     const WSDL = 'https://ec.europa.eu/taxation_customs/tedb/ws/VatRetrievalService.wsdl';
-    const SOAP_CONFIG = [
-        'version' => SOAP_1_1,
-        'cache_wsdl' => WSDL_CACHE_MEMORY,
-    ];
+
     /* @see https://ec.europa.eu/taxation_customs/tedb/ws/VatRetrievalServiceType.xsd */
     const RATE_TYPE_STANDARD = 'STANDARD';
     const RATE_VALUE_TYPE_DEFAULT = 'DEFAULT';
@@ -22,7 +19,7 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
 
     public function __construct(?SoapClient $client = null)
     {
-        $this->client = $client ?? new SoapClient(self::WSDL, self::SOAP_CONFIG);
+        $this->client = $client ?? new SoapClient(self::WSDL);
     }
 
     /**
@@ -59,6 +56,7 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
         foreach ($response->vatRateResults as $vatRateResult) {
             if (
                 isset($vatRateResult->memberState) &&
+                isset($vatRateResult->rate) &&
                 isset($vatRateResult->rate->type) &&
                 isset($vatRateResult->rate->value) &&
                 isset($vatRateResult->type) &&
