@@ -15,7 +15,8 @@ class VatServiceTest extends TestCase
     /** @dataProvider countryTestData */
     public function testCountryInEu(bool $validCountry, bool $inEu, bool $result): void
     {
-        $service = new Vat();
+        $vatVerifyMock = $this->createMock(VerifiesVatNumbers::class);
+        $service = new Vat($vatVerifyMock);
         $mock = $this->createMock(Iso2::class);
         $mock->method('isCountryValid')->willReturn($validCountry);
         $mock->method('isCountryInEu')->willReturn($inEu);
