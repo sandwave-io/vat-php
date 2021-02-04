@@ -2,7 +2,7 @@
 
 namespace SandwaveIo\Vat;
 
-use DateTime;
+use DateTimeImmutable;
 use SandwaveIo\Vat\Countries\Iso2;
 use SandwaveIo\Vat\VatRates\ResolvesVatRates;
 use SandwaveIo\Vat\VatRates\TaxesEuropeDatabaseClient;
@@ -29,7 +29,7 @@ class Vat
         return $this->countries->isCountryValid($countryCode) && $this->countries->isCountryInEu($countryCode);
     }
 
-    public function europeanVatRate(string $countryCode, ?DateTime $date = null, float $fallbackRate = 0.0): float
+    public function europeanVatRate(string $countryCode, ?DateTimeImmutable $date = null, float $fallbackRate = 0.0): float
     {
         if (! $this->countryInEurope($countryCode)) {
             return $fallbackRate;

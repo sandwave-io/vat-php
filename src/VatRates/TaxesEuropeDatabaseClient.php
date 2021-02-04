@@ -2,7 +2,7 @@
 
 namespace SandwaveIo\Vat\VatRates;
 
-use DateTime;
+use DateTimeImmutable;
 use SandwaveIo\Vat\Exceptions\VatFetchFailedException;
 use SoapClient;
 use SoapFault;
@@ -26,14 +26,14 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
      * Retrieve the default VAT rate for a given country. If the countries VAT rate cannot be resolved, null is returned.
      * This also happens if the country does not exist in the European Tax Database.
      *
-     * @param string        $countryCode ISO country code
-     * @param DateTime|null $dateTime    Date of checking, defaults to today.
+     * @param string                 $countryCode ISO country code
+     * @param DateTimeImmutable|null $dateTime    Date of checking, defaults to today.
      *
      * @return float|null
      */
-    public function getDefaultVatRateForCountry(string $countryCode, ?DateTime $dateTime = null): ?float
+    public function getDefaultVatRateForCountry(string $countryCode, ?DateTimeImmutable $dateTime = null): ?float
     {
-        $date = $dateTime ?? new DateTime();
+        $date = $dateTime ?? new DateTimeImmutable();
         $response = $this->call('retrieveVatRates', [
             'retrieveVatRatesRequest' => [
                 'memberStates' => [$countryCode],

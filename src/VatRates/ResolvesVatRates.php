@@ -2,9 +2,9 @@
 
 namespace SandwaveIo\Vat\VatRates;
 
-use DateTime;
+use DateTimeImmutable;
 
 interface ResolvesVatRates
 {
-    public function getDefaultVatRateForCountry(string $countryCode, ?DateTime $dateTime = null): ?float;
+    public function getDefaultVatRateForCountry(string $countryCode, ?DateTimeImmutable $dateTime = null): ?float;
 }
