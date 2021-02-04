@@ -14,8 +14,8 @@ class ValidateCountriesTest extends TestCase
     public function testValidateCountries(string $countryCode, bool $valid, bool $inEu): void
     {
         $countries = new Iso2();
-        Assert::assertEquals($valid, $countries->isCountryValid($countryCode), 'Unexpected value, country code valid/invalid.');
-        Assert::assertEquals($inEu, $countries->isCountryInEu($countryCode), 'Unexpected value, country in/not-in eu.');
+        Assert::assertSame($valid, $countries->isCountryValid($countryCode), 'Unexpected value, country code valid/invalid.');
+        Assert::assertSame($inEu, $countries->isCountryInEu($countryCode), 'Unexpected value, country in/not-in eu.');
     }
 
     /**

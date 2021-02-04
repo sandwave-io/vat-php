@@ -20,7 +20,7 @@ class VatServiceTest extends TestCase
         $mock->method('isCountryInEu')->willReturn($inEu);
         $service->setCountries($mock);
 
-        Assert::assertEquals($result, $service->countryInEurope('NL'));
+        Assert::assertSame($result, $service->countryInEurope('NL'));
     }
 
     /** @return Generator<array> */
@@ -46,7 +46,7 @@ class VatServiceTest extends TestCase
         $service->setCountries($isoMock);
         $service->setVatRateResolver($vatResolverMock);
 
-        Assert::assertEquals($result, $service->europeanVatRate($countryCode));
+        Assert::assertSame($result, $service->europeanVatRate($countryCode));
     }
 
     /** @return Generator<array> */

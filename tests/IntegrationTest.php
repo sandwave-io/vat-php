@@ -18,12 +18,12 @@ class IntegrationTest extends TestCase
     public function testEuropeanVatRate(): void
     {
         $service = new Vat();
-        Assert::assertEquals(21.0, $service->europeanVatRate('NL'));
+        Assert::assertSame(21.0, $service->europeanVatRate('NL'));
     }
 
     public function testNonEuropeanVatRate(): void
     {
         $service = new Vat();
-        Assert::assertEquals(0.0, $service->europeanVatRate('OM'));
+        Assert::assertSame(0.0, $service->europeanVatRate('OM'));
     }
 }

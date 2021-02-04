@@ -23,7 +23,7 @@ class TedbClientTest extends TestCase
         $client = new TaxesEuropeDatabaseClient($mockedSoapClient);
 
         $result = $client->getDefaultVatRateForCountry('NL');
-        Assert::assertEquals($rate, $result);
+        Assert::assertSame($rate, $result);
     }
 
     public function testGetRatesException(): void
