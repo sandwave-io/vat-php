@@ -5,7 +5,7 @@
          cacheResultFile=".phpunit.cache/test-results"
          executionOrder="depends,defects"
          forceCoversAnnotation="true"
-         beStrictAboutCoversAnnotation="true"
+         beStrictAboutCoversAnnotation="false"
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTodoAnnotatedTests="true"
          colors="true"
@@ -17,8 +17,7 @@
             <directory suffix="Test.php">tests</directory>
         </testsuite>
     </testsuites>
-    <coverage cacheDirectory=".phpunit.cache/code-coverage"
-              processUncoveredFiles="true">
+    <coverage cacheDirectory=".phpunit.cache/code-coverage" processUncoveredFiles="true">
         <report>
             <clover outputFile="clover.xml"/>
         </report>

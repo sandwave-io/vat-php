@@ -30,7 +30,7 @@ $vatServcie->validateVatNumber("YOURVATNUMBERHERE"); // true
 
 $vatServcie->countryInEurope('NL'); // true
 
-$vatServcie->europeanVatRate("YOURVATNUMBERHERE", "NL"); // 0.0
+$vatServcie->europeanVatRate("YOURVATNUMBERHERE"); // 0.0
 ```
 
 ## External documentation
@@ -52,6 +52,11 @@ vendor/bin/php-cs-fixer fix
 vendor/bin/phpstan analyze
 
 vendor/bin/phpunit --coverage-text
+```
+
+There is also an integration test, in order to skip this (heavy) test, run:
+```bash
+vendor/bin/phpunit --coverage-text --exclude=large
 ```
 
 These tools will also run in GitHub actions on PR's and pushes on master.
