@@ -5,6 +5,7 @@ namespace SandwaveIo\Vat\Tests\VatRates;
 use Generator;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
+use SandwaveIo\Vat\Exceptions\VatFetchFailedException;
 use SandwaveIo\Vat\VatRates\TaxesEuropeDatabaseClient;
 use SoapClient;
 use SoapFault;
@@ -35,8 +36,8 @@ class TedbClientTest extends TestCase
         /** @var SoapClient $mockedSoapClient */
         $client = new TaxesEuropeDatabaseClient($mockedSoapClient);
 
-        $result = $client->getDefaultVatRateForCountry('NL');
-        Assert::assertEquals(null, $result);
+        $this->expectException(VatFetchFailedException::class);
+        $client->getDefaultVatRateForCountry('NL');
     }
 
     /** @return Generator<array> */

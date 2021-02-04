@@ -3,6 +3,7 @@
 namespace SandwaveIo\Vat\VatRates;
 
 use DateTime;
+use SandwaveIo\Vat\Exceptions\VatFetchFailedException;
 use SoapClient;
 use SoapFault;
 
@@ -87,7 +88,7 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
             }
             return $response;
         } catch (SoapFault $fault) {
-            return null;
+            throw new VatFetchFailedException('Could not fetch VAT rate from TEDB: ' . $fault->faultstring);
         }
     }
 }
