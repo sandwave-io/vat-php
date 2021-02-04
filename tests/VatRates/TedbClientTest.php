@@ -4,6 +4,7 @@ namespace SandwaveIo\Vat\Tests\VatRates;
 
 use Generator;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use SandwaveIo\Vat\Exceptions\VatFetchFailedException;
 use SandwaveIo\Vat\VatRates\TaxesEuropeDatabaseClient;
@@ -16,10 +17,9 @@ class TedbClientTest extends TestCase
     /** @dataProvider soapTestData */
     public function testGetRates(?object $rates, ?float $rate): void
     {
+        /** @var MockObject&SoapClient $mockedSoapClient */
         $mockedSoapClient = $this->getMockFromWsdl(TaxesEuropeDatabaseClient::WSDL);
         $mockedSoapClient->method('__soapCall')->with('retrieveVatRates')->willReturn($rates);
-
-        /** @var SoapClient $mockedSoapClient */
         $client = new TaxesEuropeDatabaseClient($mockedSoapClient);
 
         $result = $client->getDefaultVatRateForCountry('NL');
@@ -28,12 +28,11 @@ class TedbClientTest extends TestCase
 
     public function testGetRatesException(): void
     {
+        /** @var MockObject&SoapClient $mockedSoapClient */
         $mockedSoapClient = $this->getMockFromWsdl(TaxesEuropeDatabaseClient::WSDL);
         $mockedSoapClient->method('__soapCall')
             ->with('retrieveVatRates')
             ->willThrowException(new SoapFault('test', 'testtest'));
-
-        /** @var SoapClient $mockedSoapClient */
         $client = new TaxesEuropeDatabaseClient($mockedSoapClient);
 
         $this->expectException(VatFetchFailedException::class);
