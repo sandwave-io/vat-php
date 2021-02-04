@@ -7,3 +7,7 @@ parameters:
     paths:
         - src
         - tests
+    ignoreErrors:
+        # Generic does not get passed along nicely, so PHPStan cannot find out that the Wsdl Mock is in fact an instance of SoapClient.
+        - '#Unable to resolve the template type RealInstanceType in call to method PHPUnit\\Framework\\TestCase::getMockFromWsdl\(\)#'
+        - '#Call to an undefined method SoapClient::checkVat\(\).#'
