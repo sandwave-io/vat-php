@@ -6,7 +6,6 @@ use Generator;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use SandwaveIo\Vat\Countries\Iso2;
-use SandwaveIo\Vat\Vat;
 use SandwaveIo\Vat\VatRates\ResolvesVatRates;
 
 /** @covers \SandwaveIo\Vat\Vat */
@@ -15,7 +14,7 @@ class VatServiceTest extends TestCase
     /** @dataProvider countryTestData */
     public function testCountryInEu(bool $validCountry, bool $inEu, bool $result): void
     {
-        $service = new Vat();
+        $service = new VatStub();
         $mock = $this->createMock(Iso2::class);
         $mock->method('isCountryValid')->willReturn($validCountry);
         $mock->method('isCountryInEu')->willReturn($inEu);
@@ -43,7 +42,7 @@ class VatServiceTest extends TestCase
         $vatResolverMock = $this->createMock(ResolvesVatRates::class);
         $vatResolverMock->method('getDefaultVatRateForCountry')->willReturn($rate);
 
-        $service = new Vat();
+        $service = new VatStub();
         $service->setCountries($isoMock);
         $service->setVatRateResolver($vatResolverMock);
 

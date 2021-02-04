@@ -7,10 +7,10 @@ use SandwaveIo\Vat\Countries\Iso2;
 use SandwaveIo\Vat\VatRates\ResolvesVatRates;
 use SandwaveIo\Vat\VatRates\TaxesEuropeDatabaseClient;
 
-final class Vat
+class Vat
 {
-    private Iso2 $countries;
-    private ResolvesVatRates $vatRateResolver;
+    protected Iso2 $countries;
+    protected ResolvesVatRates $vatRateResolver;
 
     public function __construct()
     {
@@ -35,17 +35,5 @@ final class Vat
             return $fallbackRate;
         }
         return $this->vatRateResolver->getDefaultVatRateForCountry($countryCode, $date) ?? $fallbackRate;
-    }
-
-    /** @internal */
-    public function setCountries(Iso2 $countries): void
-    {
-        $this->countries = $countries;
-    }
-
-    /** @internal */
-    public function setVatRateResolver(ResolvesVatRates $vatRateResolver): void
-    {
-        $this->vatRateResolver = $vatRateResolver;
     }
 }
