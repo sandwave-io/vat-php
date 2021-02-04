@@ -29,12 +29,12 @@ final class Vat
         return $this->countries->isCountryValid($countryCode) && $this->countries->isCountryInEu($countryCode);
     }
 
-    public function europeanVatRate(string $countryCode, ?DateTime $date = null): float
+    public function europeanVatRate(string $countryCode, ?DateTime $date = null, float $fallbackRate = 0.0): float
     {
         if (! $this->countryInEurope($countryCode)) {
-            return 0.0;
+            return $fallbackRate;
         }
-        return $this->vatRateResolver->getDefaultVatRateForCountry($countryCode, $date) ?? 0.0;
+        return $this->vatRateResolver->getDefaultVatRateForCountry($countryCode, $date) ?? $fallbackRate;
     }
 
     /** @internal */
