@@ -41,7 +41,7 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
             ],
         ]);
 
-        if (is_null($response)) {
+        if ($response === null) {
             return null;
         }
 
