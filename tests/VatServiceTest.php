@@ -36,7 +36,7 @@ class VatServiceTest extends TestCase
 
     /**
      * @dataProvider vatNumberTestData
-     * @depends testCountryInEu
+     * @Depends ValidateCountriesTest::testValidateCountries
      */
     public function testValidateVatNumber(bool $valid, string $vatNumber, string $countryCode, bool $result): void
     {
