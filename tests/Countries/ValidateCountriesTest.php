@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use SandwaveIo\Vat\Countries\Iso2;
 
 /** @covers \SandwaveIo\Vat\Countries\Iso2 */
-class ValidateCountriesTest extends TestCase
+final class ValidateCountriesTest extends TestCase
 {
     /**  @dataProvider countriesProvider */
     public function testValidateCountries(string $countryCode, bool $valid, bool $inEu): void

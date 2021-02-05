@@ -4,6 +4,6 @@ namespace SandwaveIo\Vat\Exceptions;
 
 use RuntimeException;
 
-class VatFetchFailedException extends RuntimeException
+final class VatFetchFailedException extends RuntimeException
 {
 }

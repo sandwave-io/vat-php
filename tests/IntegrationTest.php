@@ -13,7 +13,7 @@ use SandwaveIo\Vat\Vat;
  * @large
  * @runInSeparateProcess
  */
-class IntegrationTest extends TestCase
+final class IntegrationTest extends TestCase
 {
     public function testEuropeanVatRate(): void
     {

@@ -30,7 +30,10 @@
         "phpstan/phpstan": "^0.12.71",
         "friendsofphp/php-cs-fixer": "^2.18",
         "uptimeproject/php-cs-fixer-config": "^1.1",
-        "phpstan/phpstan-strict-rules": "^0.12.9"
+        "phpstan/phpstan-strict-rules": "^0.12.9",
+        "phpstan/phpstan-deprecation-rules": "^0.12.6",
+        "phpstan/phpstan-phpunit": "^0.12.17",
+        "ergebnis/phpstan-rules": "^0.15.3"
     },
     "autoload": {
         "psr-4": {
