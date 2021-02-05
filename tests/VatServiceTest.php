@@ -11,7 +11,7 @@ use SandwaveIo\Vat\VatNumbers\VerifiesVatNumbers;
 use SandwaveIo\Vat\VatRates\ResolvesVatRates;
 
 /** @covers \SandwaveIo\Vat\Vat */
-class VatServiceTest extends TestCase
+final class VatServiceTest extends TestCase
 {
     /** @dataProvider countryTestData */
     public function testCountryInEu(bool $validCountry, bool $inEu, bool $result): void

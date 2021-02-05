@@ -1,13 +1,22 @@
 includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/ergebnis/phpstan-rules/rules.neon
 parameters:
     checkGenericClassInNonGenericObjectType: true
     checkMissingIterableValueType: true
+    ergebnis:
+        classesAllowedToBeExtended:
+            - PHPUnit\Framework\TestCase
+            - RuntimeException
     level: 8
     paths:
         - src
         - tests
     ignoreErrors:
-        # Generic does not get passed along nicely, so PHPStan cannot find out that the Wsdl Mock is in fact an instance of SoapClient.
-        - '#Unable to resolve the template type RealInstanceType in call to method PHPUnit\\Framework\\TestCase::getMockFromWsdl\(\)#'
+        - '#Method [A-Za-z\\]+::[a-zA-Z0-9\\_]+\(\) has parameter [\$A-Za-z]+ (with a nullable type declaration|with null as default value).#'
+        - '#Method [A-Za-z\\]+::[a-zA-Z0-9\\_]+\(\) has a nullable return type declaration.#'
+        - '#Constructor in [A-Za-z\\]+ has parameter [\$A-Za-z]+ with default value.#'
+        - '#Language construct isset\(\) should not be used.#'
         - '#Call to an undefined method SoapClient::checkVat\(\).#'

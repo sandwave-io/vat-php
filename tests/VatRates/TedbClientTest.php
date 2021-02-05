@@ -12,7 +12,7 @@ use SoapClient;
 use SoapFault;
 
 /** @covers \SandwaveIo\Vat\VatRates\TaxesEuropeDatabaseClient */
-class TedbClientTest extends TestCase
+final class TedbClientTest extends TestCase
 {
     /** @dataProvider soapTestData */
     public function testGetRates(?object $rates, ?float $rate): void
