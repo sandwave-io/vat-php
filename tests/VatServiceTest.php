@@ -56,6 +56,7 @@ final class VatServiceTest extends TestCase
     /** @return Generator<array> */
     public function vatNumberTestData(): Generator
     {
+        yield [true, true, true, '138250460B01', 'NL', true];
         yield [true, true, true, 'NL138250460B01', 'NL', true];
         yield [true, true, false, 'NL138250460B01', 'AZ', false];
         yield [false, true, true, 'invalidVatNumber', 'DE', false];
