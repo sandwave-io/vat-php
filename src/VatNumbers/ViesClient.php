@@ -29,7 +29,10 @@ final class ViesClient implements ValidatesVatNumbers
 
             return $response->valid;
         } catch (SoapFault $fault) {
-            throw new VatNumberValidateFailedException('Unable to verify VAT number using VIES API: ' . $fault->faultstring);
+            throw new VatNumberValidateFailedException(
+                'Unable to verify VAT number using VIES API: ' . $fault->faultstring,
+                ['checkVat' => $params],
+            );
         }
     }
 }
