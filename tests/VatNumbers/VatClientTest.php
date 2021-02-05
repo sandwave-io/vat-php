@@ -20,7 +20,6 @@ final class VatClientTest extends TestCase
         $mockedSoapClient = $this->getMockFromWsdl(ViesClient::WSDL);
         $mockedSoapClient->method('checkVat')->willReturn($validated);
 
-        /** @var SoapClient $mockedSoapClient */
         $client = new ViesClient($mockedSoapClient);
 
         Assert::assertTrue($client->verifyVatNumber('NL138250460B01', 'NL'));
@@ -33,7 +32,6 @@ final class VatClientTest extends TestCase
         $mockedSoapClient->method('checkVat')
             ->willThrowException(new SoapFault('test', 'testtest'));
 
-        /** @var SoapClient $mockedSoapClient */
         $client = new ViesClient($mockedSoapClient);
 
         $this->expectException(VatNumberValidateFailedException::class);
