@@ -4,7 +4,7 @@ namespace SandwaveIo\Vat\Tests\VatNumbers;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
-use SandwaveIo\Vat\Exceptions\VatNumberVerifyFailedException;
+use SandwaveIo\Vat\Exceptions\VatNumberValidateFailedException;
 use SandwaveIo\Vat\VatNumbers\ViesClient;
 use SoapClient;
 use SoapFault;
@@ -21,8 +21,7 @@ final class VatClientTest extends TestCase
         /** @var SoapClient $mockedSoapClient */
         $client = new ViesClient($mockedSoapClient);
 
-        $result = $client->verifyVatNumber('NL138250460B01', 'NL');
-        Assert::assertEquals(true, $result);
+        Assert::assertTrue($client->verifyVatNumber('NL138250460B01', 'NL'));
     }
 
     public function testGetRatesException(): void
@@ -35,7 +34,7 @@ final class VatClientTest extends TestCase
         /** @var SoapClient $mockedSoapClient */
         $client = new ViesClient($mockedSoapClient);
 
-        $this->expectException(VatNumberVerifyFailedException::class);
+        $this->expectException(VatNumberValidateFailedException::class);
         $client->verifyVatNumber('NL138250460B01', 'NL');
     }
 }

@@ -2,7 +2,7 @@
 
 namespace SandwaveIo\Vat\VatNumbers;
 
-interface VerifiesVatNumbers
+interface ValidatesVatNumbers
 {
     public function verifyVatNumber(string $vatNumber, string $countryCode): bool;
 }

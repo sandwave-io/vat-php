@@ -7,7 +7,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use SandwaveIo\Vat\Countries\ResolvesCountries;
 use SandwaveIo\Vat\Vat;
-use SandwaveIo\Vat\VatNumbers\VerifiesVatNumbers;
+use SandwaveIo\Vat\VatNumbers\ValidatesVatNumbers;
 use SandwaveIo\Vat\VatRates\ResolvesVatRates;
 
 /** @covers \SandwaveIo\Vat\Vat */
@@ -46,11 +46,11 @@ final class VatServiceTest extends TestCase
         $countryResolverMock->method('isCountryValid')->willReturn($validCountry);
         $countryResolverMock->method('isCountryInEu')->willReturn($inEu);
 
-        $vatVerifyMock = $this->createMock(VerifiesVatNumbers::class);
+        $vatVerifyMock = $this->createMock(ValidatesVatNumbers::class);
         $vatVerifyMock->method('verifyVatNumber')->willReturn($valid);
         $service = new Vat($countryResolverMock, null, $vatVerifyMock);
 
-        Assert::assertEquals($result, $service->validateVatNumber($vatNumber, $countryCode));
+        Assert::assertSame($result, $service->validateEuropeanVatNumber($vatNumber, $countryCode));
     }
 
     /** @return Generator<array> */

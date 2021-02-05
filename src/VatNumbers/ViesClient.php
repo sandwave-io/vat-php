@@ -2,11 +2,11 @@
 
 namespace SandwaveIo\Vat\VatNumbers;
 
-use SandwaveIo\Vat\Exceptions\VatNumberVerifyFailedException;
+use SandwaveIo\Vat\Exceptions\VatNumberValidateFailedException;
 use SoapClient;
 use SoapFault;
 
-final class ViesClient implements VerifiesVatNumbers
+final class ViesClient implements ValidatesVatNumbers
 {
     const WSDL = 'https://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl';
 
@@ -29,7 +29,7 @@ final class ViesClient implements VerifiesVatNumbers
 
             return $response->valid;
         } catch (SoapFault $fault) {
-            throw new VatNumberVerifyFailedException('Unable to verify VAT number using VIES API: ' . $fault->faultstring);
+            throw new VatNumberValidateFailedException('Unable to verify VAT number using VIES API: ' . $fault->faultstring);
         }
     }
 }

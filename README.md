@@ -26,7 +26,7 @@
 ```php
 $vatServcie = new \SandwaveIo\Vat\Vat;
 
-$vatServcie->validateVatNumber("YOURVATNUMBERHERE"); // true
+$vatServcie->validateEuropeanVatNumber("YOURVATNUMBERHERE"); // true
 
 $vatServcie->countryInEurope('NL'); // true
 

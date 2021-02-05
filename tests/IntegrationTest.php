@@ -15,15 +15,31 @@ use SandwaveIo\Vat\Vat;
  */
 final class IntegrationTest extends TestCase
 {
+    protected Vat $service;
+
+    protected function setUp(): void
+    {
+        $this->service = new Vat();
+    }
+
     public function testEuropeanVatRate(): void
     {
-        $service = new Vat();
-        Assert::assertSame(21.0, $service->europeanVatRate('NL'));
+        Assert::assertSame(21.0, $this->service->europeanVatRate('NL'));
     }
 
     public function testNonEuropeanVatRate(): void
     {
-        $service = new Vat();
-        Assert::assertSame(0.0, $service->europeanVatRate('OM'));
+        Assert::assertSame(0.0, $this->service->europeanVatRate('OM'));
+    }
+
+    public function testEuropeanVatNumber(): void
+    {
+        Assert::assertTrue($this->service->validateEuropeanVatNumber('NL861350480B01', 'NL'));
+        Assert::assertFalse($this->service->validateEuropeanVatNumber('NL138250460B01', 'NL'));
+    }
+
+    public function testNonEuropeanVatNumber(): void
+    {
+        Assert::assertFalse($this->service->validateEuropeanVatNumber('NL861350480B01', 'OM'));
     }
 }
