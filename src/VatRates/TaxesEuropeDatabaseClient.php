@@ -85,7 +85,10 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
             }
             return $response;
         } catch (SoapFault $fault) {
-            throw new VatFetchFailedException('Could not fetch VAT rate from TEDB: ' . $fault->faultstring);
+            throw new VatFetchFailedException(
+                'Could not fetch VAT rate from TEDB: ' . $fault->faultstring,
+                $params
+            );
         }
     }
 }
