@@ -54,9 +54,24 @@ vendor/bin/phpstan analyze
 vendor/bin/phpunit --coverage-text
 ```
 
+These tools will also run in GitHub actions on PR's and pushes on master.
+
+### About the testsuite
+
 There is also an integration test, in order to skip this (heavy) test, run:
 ```bash
-vendor/bin/phpunit --coverage-text --exclude=large
+vendor/bin/phpunit --exclude=large
 ```
 
-These tools will also run in GitHub actions on PR's and pushes on master.
+We generate coverage in PHPUnit. On the CI we use XDebug to do that. If you have XDebug installed, you can run:
+```bash
+vendor/bin/phpunit --coverage-text
+
+# or generate an interactive report.
+vendor/bin/phpunit --coverage-html=coverage_report
+```
+
+Alternatively, you can use _PHPDBG_ as coverage driver:
+```bash
+phpdbg -qrr vendor/bin/phpunit --coverage-text
+```
