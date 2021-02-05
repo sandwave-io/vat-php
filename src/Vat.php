@@ -4,18 +4,19 @@ namespace SandwaveIo\Vat;
 
 use DateTimeImmutable;
 use SandwaveIo\Vat\Countries\Iso2;
+use SandwaveIo\Vat\Countries\ResolvesCountries;
 use SandwaveIo\Vat\VatRates\ResolvesVatRates;
 use SandwaveIo\Vat\VatRates\TaxesEuropeDatabaseClient;
 
-class Vat
+final class Vat
 {
-    protected Iso2 $countries;
-    protected ResolvesVatRates $vatRateResolver;
+    private ResolvesCountries $countryResolver;
+    private ResolvesVatRates $vatRateResolver;
 
-    public function __construct()
+    public function __construct(?ResolvesCountries $countryResolver = null, ?ResolvesVatRates $vatRateResolver = null)
     {
-        $this->countries = new Iso2();
-        $this->vatRateResolver = new TaxesEuropeDatabaseClient();
+        $this->countryResolver = $countryResolver ?? new Iso2();
+        $this->vatRateResolver = $vatRateResolver ?? new TaxesEuropeDatabaseClient();
     }
 
     public function validateVatNumber(string $vatNumber): bool
@@ -26,7 +27,7 @@ class Vat
 
     public function countryInEurope(string $countryCode): bool
     {
-        return $this->countries->isCountryValid($countryCode) && $this->countries->isCountryInEu($countryCode);
+        return $this->countryResolver->isCountryValid($countryCode) && $this->countryResolver->isCountryInEu($countryCode);
     }
 
     public function europeanVatRate(string $countryCode, ?DateTimeImmutable $date = null, float $fallbackRate = 0.0): float
