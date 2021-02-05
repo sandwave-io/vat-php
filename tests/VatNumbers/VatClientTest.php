@@ -10,13 +10,13 @@ use SoapClient;
 use SoapFault;
 
 /** @covers \SandwaveIo\Vat\VatNumbers\ViesClient */
-class VatClientTest extends TestCase
+final class VatClientTest extends TestCase
 {
     public function testVerifyVatNumber(): void
     {
         $validated = unserialize(include 'numbers_snapshot.php');
         $mockedSoapClient = $this->getMockFromWsdl(ViesClient::WSDL);
-        $mockedSoapClient->method('checkVat')->willReturn($validated);
+        $mockedSoapClient->method('checkVat')->willReturn($validated); /* @phpstan-ignore-line */
 
         /** @var SoapClient $mockedSoapClient */
         $client = new ViesClient($mockedSoapClient);
@@ -28,6 +28,7 @@ class VatClientTest extends TestCase
     public function testGetRatesException(): void
     {
         $mockedSoapClient = $this->getMockFromWsdl(ViesClient::WSDL);
+        /* @phpstan-ignore-next-line */
         $mockedSoapClient->method('checkVat')
             ->willThrowException(new SoapFault('test', 'testtest'));
 
