@@ -2,7 +2,7 @@
 
 namespace SandwaveIo\Vat\Countries;
 
-class Iso2
+final class Iso2 implements ResolvesCountries
 {
     /**
      * Source: Country.io.
