@@ -7,6 +7,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use SandwaveIo\Vat\Countries\ResolvesCountries;
 use SandwaveIo\Vat\Vat;
+use SandwaveIo\Vat\VatNumbers\ValidatesVatNumbers;
 use SandwaveIo\Vat\VatRates\ResolvesVatRates;
 
 /** @covers \SandwaveIo\Vat\Vat */
@@ -30,6 +31,36 @@ final class VatServiceTest extends TestCase
         yield [true, false, false];
         yield [false, true, false];
         yield [false, false, false];
+    }
+
+    /** @dataProvider vatNumberTestData */
+    public function testValidateVatNumber(
+        bool $valid,
+        bool $validCountry,
+        bool $inEu,
+        string $vatNumber,
+        string $countryCode,
+        bool $result
+    ): void {
+        $countryResolverMock = $this->createMock(ResolvesCountries::class);
+        $countryResolverMock->method('isCountryValid')->willReturn($validCountry);
+        $countryResolverMock->method('isCountryInEu')->willReturn($inEu);
+
+        $vatVerifyMock = $this->createMock(ValidatesVatNumbers::class);
+        $vatVerifyMock->method('verifyVatNumber')->willReturn($valid);
+        $service = new Vat($countryResolverMock, null, $vatVerifyMock);
+
+        Assert::assertSame($result, $service->validateEuropeanVatNumber($vatNumber, $countryCode));
+    }
+
+    /** @return Generator<array> */
+    public function vatNumberTestData(): Generator
+    {
+        yield [true, true, true, '138250460B01', 'NL', true];
+        yield [true, true, true, 'NL138250460B01', 'NL', true];
+        yield [true, true, false, 'NL138250460B01', 'AZ', false];
+        yield [false, true, true, 'invalidVatNumber', 'DE', false];
+        yield [false, true, false, 'invalidVatNumber', 'IN', false];
     }
 
     /** @dataProvider euVatRateTestData */
