@@ -15,14 +15,14 @@ use SoapFault;
 final class TedbClientTest extends TestCase
 {
     /** @dataProvider soapTestData */
-    public function testGetRates(?object $rates, ?float $rate): void
+    public function testGetRates(string $countryCode, ?object $rates, ?float $rate): void
     {
         /** @var MockObject&SoapClient $mockedSoapClient */
         $mockedSoapClient = $this->getMockFromWsdl(TaxesEuropeDatabaseClient::WSDL);
         $mockedSoapClient->method('__soapCall')->with('retrieveVatRates')->willReturn($rates);
         $client = new TaxesEuropeDatabaseClient($mockedSoapClient);
 
-        $result = $client->getDefaultVatRateForCountry('NL');
+        $result = $client->getDefaultVatRateForCountry($countryCode);
         Assert::assertSame($rate, $result);
     }
 
@@ -42,9 +42,10 @@ final class TedbClientTest extends TestCase
     /** @return Generator<array> */
     public function soapTestData(): Generator
     {
-        yield [unserialize(include 'rates_snapshot.php'), 21.0];
-        yield [null, null];
-        yield [(object) [], null];
-        yield [(object) ['vatRateResults' => []], null];
+        yield ['NL', unserialize(include 'nl_rates_snapshot.php'), 21.0];
+        yield ['GR', unserialize(include 'gr_rates_snapshot.php'), 24.0];
+        yield ['NL', null, null];
+        yield ['NL', (object) [], null];
+        yield ['NL', (object) ['vatRateResults' => []], null];
     }
 }
