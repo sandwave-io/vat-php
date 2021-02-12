@@ -60,7 +60,13 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
                 isset($vatRateResult->rate->type) &&
                 isset($vatRateResult->rate->value) &&
                 isset($vatRateResult->type) &&
-                $vatRateResult->memberState === $countryCode &&
+                (
+                    $vatRateResult->memberState === $countryCode ||
+                    (
+                        /** There is a European alias for Greece (GR) which is EL. */
+                        $vatRateResult->memberState === 'EL' && $countryCode === 'GR'
+                    )
+                ) &&
                 $vatRateResult->type === $rateType &&
                 $vatRateResult->rate->type === $rateValueType
             ) {
