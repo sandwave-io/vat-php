@@ -53,6 +53,7 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
         if (! isset($response->vatRateResults)) {
             return null;
         }
+
         foreach ($response->vatRateResults as $vatRateResult) {
             if (
                 isset($vatRateResult->memberState) &&
