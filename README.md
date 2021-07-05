@@ -10,6 +10,10 @@
 
 ## Usage
 
+```shell
+composer require sandwave-io/vat
+```
+
 ```php
 $vatServcie = new \SandwaveIo\Vat\Vat;
 
