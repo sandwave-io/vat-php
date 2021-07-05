@@ -19,4 +19,3 @@ parameters:
         - '#Method [A-Za-z\\]+::[a-zA-Z0-9\\_]+\(\) has a nullable return type declaration.#'
         - '#Constructor in [A-Za-z\\]+ has parameter [\$A-Za-z]+ with default value.#'
         - '#Language construct isset\(\) should not be used.#'
-        - '#Call to an undefined method SoapClient::checkVat\(\).#'
