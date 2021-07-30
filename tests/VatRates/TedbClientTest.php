@@ -6,6 +6,7 @@ use Generator;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\SimpleCache\CacheInterface;
 use SandwaveIo\Vat\Exceptions\VatFetchFailedException;
 use SandwaveIo\Vat\VatRates\TaxesEuropeDatabaseClient;
 use SoapClient;
@@ -47,5 +48,40 @@ final class TedbClientTest extends TestCase
         yield ['NL', null, null];
         yield ['NL', (object) [], null];
         yield ['NL', (object) ['vatRateResults' => []], null];
+    }
+
+    public function testWithColdCache(): void
+    {
+        /** @var MockObject&SoapClient $mockedSoapClient */
+        $mockedSoapClient = $this->getMockFromWsdl(TaxesEuropeDatabaseClient::WSDL);
+        $mockedSoapClient
+            ->expects(TestCase::once())
+            ->method('__soapCall')
+            ->with('retrieveVatRates')
+            ->willReturn(unserialize(include 'nl_rates_snapshot.php'));
+
+        $cache = $this->createMock(CacheInterface::class);
+        $cache->expects(TestCase::once())->method('has')->willReturn(false);
+        $cache->expects(TestCase::never())->method('get');
+        $cache->expects(TestCase::once())->method('set');
+
+        $client = new TaxesEuropeDatabaseClient($mockedSoapClient);
+        $client->setCache($cache);
+        $client->getDefaultVatRateForCountry('NL');
+    }
+    public function testWithWarmCache(): void
+    {
+        /** @var MockObject&SoapClient $mockedSoapClient */
+        $mockedSoapClient = $this->getMockFromWsdl(TaxesEuropeDatabaseClient::WSDL);
+        $mockedSoapClient->expects(TestCase::never())->method('__soapCall');
+
+        $cache = $this->createMock(CacheInterface::class);
+        $cache->expects(TestCase::once())->method('has')->willReturn(true);
+        $cache->expects(TestCase::once())->method('get')->willReturn(unserialize(include 'nl_rates_snapshot.php'));
+        $cache->expects(TestCase::never())->method('set');
+
+        $client = new TaxesEuropeDatabaseClient($mockedSoapClient);
+        $client->setCache($cache);
+        $client->getDefaultVatRateForCountry('NL');
     }
 }
