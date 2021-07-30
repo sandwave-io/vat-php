@@ -69,6 +69,7 @@ final class TedbClientTest extends TestCase
         $client->setCache($cache);
         $client->getDefaultVatRateForCountry('NL');
     }
+
     public function testWithWarmCache(): void
     {
         /** @var MockObject&SoapClient $mockedSoapClient */
