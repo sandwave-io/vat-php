@@ -26,16 +26,16 @@ $vatService->europeanVatRate("YOURVATNUMBERHERE"); // 0.0
 
 ### Caching
 
-By default, the data on VAT rates per country is cached in memory (`php-soap`'s native WSDL cache). If you don't want 
-this, you may overwrite the SoapClient that is used internally.
+If you resolve VAT rates for a country quite often, it can be a little slow. If you want to, you can cache the results
+by passing a `Psr\SimpleCache\CacheInterface` to the `Vat()` service. The implementation might differ based on your 
+application, but all major frameworks implement this interface on their cache.
 
 ```php
-use SandwaveIo\Vat\Vat;
-use SandwaveIo\Vat\VatRates\TaxesEuropeDatabaseClient;
+/** @var Psr\SimpleCache\CacheInterface $cache */
 
-$soapClient = new SoapClient(TaxesEuropeDatabaseClient::WSDL, ['cache_wsdl' => WSDL_CACHE_NONE]);
-$vatService = new Vat(resolver: new TaxesEuropeDatabaseClient($soapClient));
+$vatService = new \SandwaveIo\Vat\Vat(cache: $cache);
 ```
+
 
 ## External documentation
 
