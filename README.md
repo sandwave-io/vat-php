@@ -15,13 +15,26 @@ composer require sandwave-io/vat
 ```
 
 ```php
-$vatServcie = new \SandwaveIo\Vat\Vat;
+$vatService = new \SandwaveIo\Vat\Vat;
 
-$vatServcie->validateEuropeanVatNumber("YOURVATNUMBERHERE", "COUNTRYCODE"); // true
+$vatService->validateEuropeanVatNumber("YOURVATNUMBERHERE", "COUNTRYCODE"); // true
 
-$vatServcie->countryInEurope('NL'); // true
+$vatService->countryInEurope('NL'); // true
 
-$vatServcie->europeanVatRate("YOURVATNUMBERHERE"); // 0.0
+$vatService->europeanVatRate("YOURVATNUMBERHERE"); // 0.0
+```
+
+### Caching
+
+By default, the data on VAT rates per country is cached in memory (`php-soap`'s native WSDL cache). If you don't want 
+this, you may overwrite the SoapClient that is used internally.
+
+```php
+use SandwaveIo\Vat\Vat;
+use SandwaveIo\Vat\VatRates\TaxesEuropeDatabaseClient;
+
+$soapClient = new SoapClient(TaxesEuropeDatabaseClient::WSDL);
+$vatService = new Vat(resolver: new TaxesEuropeDatabaseClient($soapClient));
 ```
 
 ## External documentation

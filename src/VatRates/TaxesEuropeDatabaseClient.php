@@ -19,7 +19,9 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
 
     public function __construct(?SoapClient $client = null)
     {
-        $this->client = $client ?? new SoapClient(self::WSDL);
+        $this->client = $client ?? new SoapClient(self::WSDL, [
+            'cache_wsdl' => WSDL_CACHE_MEMORY,
+        ]);
     }
 
     /**
