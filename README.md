@@ -33,7 +33,7 @@ this, you may overwrite the SoapClient that is used internally.
 use SandwaveIo\Vat\Vat;
 use SandwaveIo\Vat\VatRates\TaxesEuropeDatabaseClient;
 
-$soapClient = new SoapClient(TaxesEuropeDatabaseClient::WSDL);
+$soapClient = new SoapClient(TaxesEuropeDatabaseClient::WSDL, ['cache_wsdl' => WSDL_CACHE_NONE]);
 $vatService = new Vat(resolver: new TaxesEuropeDatabaseClient($soapClient));
 ```
 
