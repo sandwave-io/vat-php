@@ -15,11 +15,11 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
     const RATE_TYPE_STANDARD = 'STANDARD';
     const RATE_VALUE_TYPE_DEFAULT = 'DEFAULT';
 
-    private SoapClient $client;
+    private ?SoapClient $client;
 
     public function __construct(?SoapClient $client = null)
     {
-        $this->client = $client ?? new SoapClient(self::WSDL);
+        $this->client = $client;
     }
 
     /**
@@ -86,7 +86,7 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
     private function call(string $call, array $params): ?object
     {
         try {
-            $response = $this->client->__soapCall($call, $params);
+            $response = $this->getClient()->__soapCall($call, $params);
             if (! is_object($response)) {
                 return null;
             }
@@ -97,5 +97,14 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
                 $params
             );
         }
+    }
+
+    private function getClient(): SoapClient
+    {
+        if (! $this->client instanceof SoapClient) {
+            $this->client = new SoapClient(self::WSDL);
+        }
+
+        return $this->client;
     }
 }
