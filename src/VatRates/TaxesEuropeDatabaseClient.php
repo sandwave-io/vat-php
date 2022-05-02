@@ -69,7 +69,11 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
                     )
                 ) &&
                 $vatRateResult->type === $rateType &&
-                $vatRateResult->rate->type === $rateValueType
+                $vatRateResult->rate->type === $rateValueType &&
+                (
+                    !isset($vatRateResult->comment) ||
+                    strpos($vatRateResult->comment, 'Canary Islands') === false
+                )
             ) {
                 return $vatRateResult->rate->value;
             }
