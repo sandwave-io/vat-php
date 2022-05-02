@@ -15,13 +15,13 @@ composer require sandwave-io/vat
 ```
 
 ```php
-$vatServcie = new \SandwaveIo\Vat\Vat;
+$vatService = new \SandwaveIo\Vat\Vat;
 
-$vatServcie->validateEuropeanVatNumber("YOURVATNUMBERHERE", "COUNTRYCODE"); // true
+$vatService->validateEuropeanVatNumber("YOURVATNUMBERHERE", "COUNTRYCODE"); // true
 
-$vatServcie->countryInEurope('NL'); // true
+$vatService->countryInEurope('NL'); // true
 
-$vatServcie->europeanVatRate("YOURVATNUMBERHERE"); // 0.0
+$vatService->europeanVatRate("COUNTRYCODE"); // 0.0
 ```
 
 ## External documentation
