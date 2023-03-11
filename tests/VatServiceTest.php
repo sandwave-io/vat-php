@@ -24,8 +24,8 @@ final class VatServiceTest extends TestCase
         Assert::assertSame($result, $service->countryInEurope('NL'));
     }
 
-    /** @return Generator<array> */
-    public function countryTestData(): Generator
+    /** @return Generator<array<mixed>> */
+    public static function countryTestData(): Generator
     {
         yield [true, true, true];
         yield [true, false, false];
@@ -53,8 +53,8 @@ final class VatServiceTest extends TestCase
         Assert::assertSame($result, $service->validateEuropeanVatNumber($vatNumber, $countryCode));
     }
 
-    /** @return Generator<array> */
-    public function vatNumberTestData(): Generator
+    /** @return Generator<array<mixed>> */
+    public static function vatNumberTestData(): Generator
     {
         yield [true, true, true, '138250460B01', 'NL', true];
         yield [true, true, true, 'NL138250460B01', 'NL', true];
@@ -78,8 +78,8 @@ final class VatServiceTest extends TestCase
         Assert::assertSame($result, $service->europeanVatRate($countryCode));
     }
 
-    /** @return Generator<array> */
-    public function euVatRateTestData(): Generator
+    /** @return Generator<array<mixed>> */
+    public static function euVatRateTestData(): Generator
     {
         yield ['NL', true, true, 21.0, 21.0];
         yield ['LU', true, true, 17.0, 17.0];

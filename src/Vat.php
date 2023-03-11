@@ -13,7 +13,9 @@ use SandwaveIo\Vat\VatRates\TaxesEuropeDatabaseClient;
 final class Vat
 {
     private ResolvesCountries $countryResolver;
+
     private ResolvesVatRates $vatRateResolver;
+
     private ValidatesVatNumbers $vatNumberVerifier;
 
     public function __construct(

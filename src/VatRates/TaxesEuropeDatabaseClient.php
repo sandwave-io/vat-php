@@ -26,8 +26,8 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
      * Retrieve the default VAT rate for a given country. If the countries VAT rate cannot be resolved, null is returned.
      * This also happens if the country does not exist in the European Tax Database.
      *
-     * @param string                 $countryCode ISO country code
-     * @param DateTimeImmutable|null $dateTime    Date of checking, defaults to today.
+     * @param string             $countryCode ISO country code
+     * @param ?DateTimeImmutable $dateTime    Date of checking, defaults to today.
      *
      * @return float|null
      */
@@ -82,10 +82,7 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
     }
 
     /**
-     * @param string              $call
-     * @param array<string,array> $params
-     *
-     * @return object|null
+     * @param array<string,array<mixed>> $params
      */
     private function call(string $call, array $params): ?object
     {
