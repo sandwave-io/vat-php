@@ -1,6 +1,6 @@
 <?php
 
-$config = new UptimeProject\PhpCsFixerConfig\Config([
+$config = new SandwaveIo\PhpCsFixerConfig\Config([
     'declare_strict_types' => true,
 ]);
 $config->getFinder()
