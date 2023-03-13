@@ -7,10 +7,12 @@ use DivineOmega\Countries\Countries;
 final class Iso2 implements ResolvesCountries
 {
     public static Countries $countries;
-    public static string $europe = "Europe";
 
-    function __construct() {
-        self::$countries = new Countries;
+    public static string $europe = 'Europe';
+
+    public function __construct()
+    {
+        self::$countries = new Countries();
     }
 
     public function isCountryValid(string $countryCode): bool
