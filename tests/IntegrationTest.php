@@ -11,7 +11,9 @@ use SandwaveIo\Vat\Vat;
  * The remote API is aggressively rate-limited so the tests are run sequentially.
  *
  * @coversNothing
+ *
  * @large
+ *
  * @runInSeparateProcess
  */
 final class IntegrationTest extends TestCase

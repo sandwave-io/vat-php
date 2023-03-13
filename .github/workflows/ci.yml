@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         operating-system: [ubuntu-latest]
-        php-versions: ['7.4', '8.0']
+        php-versions: ['8.1']
 
     name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
     steps:
@@ -35,7 +35,7 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Check codestyle
-        run: vendor/bin/php-cs-fixer fix --dry-run --show-progress=none --diff-format=udiff -vvv
+        run: vendor/bin/php-cs-fixer fix --dry-run --show-progress=none -vvv
 
       - name: Run static analysis
         run: vendor/bin/phpstan analyze

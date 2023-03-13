@@ -34,8 +34,8 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
      * Retrieve the default VAT rate for a given country. If the countries VAT rate cannot be resolved, null is returned.
      * This also happens if the country does not exist in the European Tax Database.
      *
-     * @param string                 $countryCode ISO country code
-     * @param DateTimeImmutable|null $dateTime    Date of checking, defaults to today.
+     * @param string             $countryCode ISO country code
+     * @param ?DateTimeImmutable $dateTime    Date of checking, defaults to today.
      *
      * @return float|null
      */
@@ -77,7 +77,11 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
                     )
                 ) &&
                 $vatRateResult->type === $rateType &&
-                $vatRateResult->rate->type === $rateValueType
+                $vatRateResult->rate->type === $rateValueType &&
+                (
+                    ! isset($vatRateResult->comment) ||
+                    strpos($vatRateResult->comment, 'Canary Islands') === false
+                )
             ) {
                 return $vatRateResult->rate->value;
             }
@@ -86,10 +90,7 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
     }
 
     /**
-     * @param string              $call
-     * @param array<string,array> $params
-     *
-     * @return object|null
+     * @param array<string,array<mixed>> $params
      */
     private function call(string $call, array $params): ?object
     {
@@ -123,5 +124,14 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
     private function generateCacheKey(string $call, array $params): string
     {
         return 'eu_taxes_response_' . md5(serialize(['call' => $call, 'params' => $params]));
+    }
+
+    private function getClient(): SoapClient
+    {
+        if (! $this->client instanceof SoapClient) {
+            $this->client = new SoapClient(self::WSDL);
+        }
+
+        return $this->client;
     }
 }

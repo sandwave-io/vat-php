@@ -10,11 +10,11 @@ final class ViesClient implements ValidatesVatNumbers
 {
     const WSDL = 'https://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl';
 
-    private SoapClient $client;
+    private ?SoapClient $client;
 
     public function __construct(?SoapClient $client = null)
     {
-        $this->client = $client ?? new SoapClient(self::WSDL);
+        $this->client = $client;
     }
 
     public function verifyVatNumber(string $vatNumber, string $countryCode): bool
@@ -25,7 +25,7 @@ final class ViesClient implements ValidatesVatNumbers
         ];
 
         try {
-            $response = $this->client->checkVat($params);
+            $response = $this->getClient()->checkVat($params);
 
             return $response->valid;
         } catch (SoapFault $fault) {
@@ -34,5 +34,14 @@ final class ViesClient implements ValidatesVatNumbers
                 ['checkVat' => $params],
             );
         }
+    }
+
+    public function getClient(): SoapClient
+    {
+        if (! $this->client instanceof SoapClient) {
+            $this->client = new SoapClient(self::WSDL);
+        }
+
+        return $this->client;
     }
 }
