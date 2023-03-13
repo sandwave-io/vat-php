@@ -3,7 +3,7 @@
 # European VAT utility for PHP
 
 [![codecov](https://codecov.io/gh/sandwave-io/vat-php/branch/main/graph/badge.svg?token=Z9OOFA247I)](https://codecov.io/gh/sandwave-io/vat-php)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/sandwave-io/vat-php/CI)](https://packagist.org/packages/sandwave-io/vat)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/sandwave-io/vat-php/ci.yml?branch=main)](https://packagist.org/packages/sandwave-io/vat)
 [![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/sandwave-io/vat)](https://packagist.org/packages/sandwave-io/vat)
 [![Packagist PHP Version Support](https://img.shields.io/packagist/v/sandwave-io/vat)](https://packagist.org/packages/sandwave-io/vat)
 [![Packagist Downloads](https://img.shields.io/packagist/dt/sandwave-io/vat)](https://packagist.org/packages/sandwave-io/vat)
