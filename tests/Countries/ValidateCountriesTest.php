@@ -19,9 +19,9 @@ final class ValidateCountriesTest extends TestCase
     }
 
     /**
-     * @return Generator<array>
+     * @return Generator<array<mixed>>
      */
-    public function countriesProvider(): Generator
+    public static function countriesProvider(): Generator
     {
         yield ['NL', true, true];
         yield ['OM', true, false];

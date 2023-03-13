@@ -22,19 +22,19 @@
         }
     ],
     "require": {
-        "php": ">=7.4|>=8.0",
-        "ext-soap": "*",
+        "php": "^8.1",
+        "ext-soap": "*"
         "divineomega/php-countries": "^2.3"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.5",
-        "phpstan/phpstan": "^0.12",
-        "friendsofphp/php-cs-fixer": "^2.18",
-        "uptimeproject/php-cs-fixer-config": "^1.1",
-        "phpstan/phpstan-strict-rules": "^0.12",
-        "phpstan/phpstan-deprecation-rules": "^0.12",
-        "phpstan/phpstan-phpunit": "^0.12",
-        "ergebnis/phpstan-rules": "^0.15"
+        "phpunit/phpunit": "^10.0.15",
+        "phpstan/phpstan": "^1.10.6",
+        "friendsofphp/php-cs-fixer": "^3.14.4",
+        "phpstan/phpstan-strict-rules": "^1.5.0",
+        "phpstan/phpstan-deprecation-rules": "^1.1.2",
+        "phpstan/phpstan-phpunit": "^1.3.10",
+        "ergebnis/phpstan-rules": "^1.0.0",
+        "sandwave-io/php-cs-fixer-config": "^1.0.0"
     },
     "autoload": {
         "psr-4": {
@@ -45,5 +45,25 @@
         "psr-4": {
             "SandwaveIo\\Vat\\Tests\\": "tests/"
         }
+    },
+    "scripts": {
+        "test": [
+            "Composer\\Config::disableProcessTimeout",
+            "@test:types",
+            "@lint",
+            "@test:unit"
+        ],
+        "test:unit": [
+            "vendor/bin/phpunit --coverage-text"
+        ],
+        "test:types": [
+            "vendor/bin/phpstan analyze"
+        ],
+        "lint": [
+            "vendor/bin/php-cs-fixer fix --dry-run --diff --show-progress=none -vvv"
+        ],
+        "lint:fix": [
+            "vendor/bin/php-cs-fixer fix"
+        ]
     }
 }

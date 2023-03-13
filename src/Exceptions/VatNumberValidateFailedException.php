@@ -7,18 +7,15 @@ use Throwable;
 
 final class VatNumberValidateFailedException extends RuntimeException
 {
-    /** @var array<string,array> */
+    /** @var array<string,array<mixed>> */
     public array $payload;
 
     /**
      * VatNumberValidateFailedException constructor.
      *
-     * @param string              $message
-     * @param array<string,array> $payload
-     * @param int                 $code
-     * @param Throwable|null      $previous
+     * @param array<string,array<mixed>> $payload
      */
-    public function __construct($message = '', array $payload = [], $code = 0, Throwable $previous = null)
+    public function __construct(string $message = '', array $payload = [], int $code = 0, ?Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
         $this->payload = $payload;

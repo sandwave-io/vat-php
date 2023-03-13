@@ -2,5 +2,5 @@
 /vendor/
 /.idea/
 composer.lock
-.php_cs.cache
+.php-cs-fixer.cache
 clover.xml

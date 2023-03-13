@@ -39,8 +39,8 @@ final class TedbClientTest extends TestCase
         $client->getDefaultVatRateForCountry('NL');
     }
 
-    /** @return Generator<array> */
-    public function soapTestData(): Generator
+    /** @return Generator<array<mixed>> */
+    public static function soapTestData(): Generator
     {
         yield ['NL', unserialize(include 'nl_rates_snapshot.php'), 21.0];
         yield ['GR', unserialize(include 'gr_rates_snapshot.php'), 24.0];
