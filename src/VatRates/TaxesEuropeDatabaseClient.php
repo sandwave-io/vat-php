@@ -3,6 +3,7 @@
 namespace SandwaveIo\Vat\VatRates;
 
 use DateTimeImmutable;
+use Psr\SimpleCache\CacheInterface;
 use SandwaveIo\Vat\Exceptions\VatFetchFailedException;
 use SoapClient;
 use SoapFault;
@@ -15,11 +16,17 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
     const RATE_TYPE_STANDARD = 'STANDARD';
     const RATE_VALUE_TYPE_DEFAULT = 'DEFAULT';
 
-    private ?SoapClient $client;
+    private ?CacheInterface $cache;
 
-    public function __construct(?SoapClient $client = null)
+    public function __construct(private ?SoapClient $client = null)
     {
         $this->client = $client;
+        $this->cache = null;
+    }
+
+    public function setCache(?CacheInterface $cache): void
+    {
+        $this->cache = $cache;
     }
 
     /**
@@ -86,18 +93,36 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
      */
     private function call(string $call, array $params): ?object
     {
+        $cacheKey = $this->generateCacheKey($call, $params);
+        if ($this->cache !== null && $this->cache->has($cacheKey)) {
+            return $this->cache->get($cacheKey);
+        }
         try {
             $response = $this->getClient()->__soapCall($call, $params);
-            if (! is_object($response)) {
-                return null;
-            }
-            return $response;
         } catch (SoapFault $fault) {
             throw new VatFetchFailedException(
                 'Could not fetch VAT rate from TEDB: ' . $fault->faultstring,
                 $params
             );
         }
+        if (! is_object($response)) {
+            return null;
+        }
+        if ($this->cache !== null) {
+            $this->cache->set($cacheKey, $response);
+        }
+        return $response;
+    }
+
+    /**
+     * @param string                     $call
+     * @param array<string,array<mixed>> $params
+     *
+     * @return string
+     */
+    private function generateCacheKey(string $call, array $params): string
+    {
+        return 'eu_taxes_response_' . md5(serialize(['call' => $call, 'params' => $params]));
     }
 
     private function getClient(): SoapClient

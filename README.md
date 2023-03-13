@@ -21,8 +21,21 @@ $vatService->validateEuropeanVatNumber("YOURVATNUMBERHERE", "COUNTRYCODE"); // t
 
 $vatService->countryInEurope('NL'); // true
 
-$vatService->europeanVatRate("COUNTRYCODE"); // 0.0
+$vatService->europeanVatRate("YOURVATNUMBERHERE"); // 0.0
 ```
+
+### Caching
+
+If you resolve VAT rates for a country quite often, it can be a little slow. If you want to, you can cache the results
+by passing a `Psr\SimpleCache\CacheInterface` to the `Vat()` service. The implementation might differ based on your 
+application, but all major frameworks implement this interface on their cache.
+
+```php
+/** @var Psr\SimpleCache\CacheInterface $cache */
+
+$vatService = new \SandwaveIo\Vat\Vat(cache: $cache);
+```
+
 
 ## External documentation
 

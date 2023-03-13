@@ -3,6 +3,7 @@
 namespace SandwaveIo\Vat;
 
 use DateTimeImmutable;
+use Psr\SimpleCache\CacheInterface;
 use SandwaveIo\Vat\Countries\Iso2;
 use SandwaveIo\Vat\Countries\ResolvesCountries;
 use SandwaveIo\Vat\VatNumbers\ValidatesVatNumbers;
@@ -21,11 +22,15 @@ final class Vat
     public function __construct(
         ?ResolvesCountries $countryResolver = null,
         ?ResolvesVatRates $vatRateResolver = null,
-        ?ValidatesVatNumbers $vatNumberVerifier = null
+        ?ValidatesVatNumbers $vatNumberVerifier = null,
+        ?CacheInterface $cache = null
     ) {
         $this->countryResolver = $countryResolver ?? new Iso2();
         $this->vatRateResolver = $vatRateResolver ?? new TaxesEuropeDatabaseClient();
         $this->vatNumberVerifier = $vatNumberVerifier ?? new ViesClient();
+        if ($cache !== null) {
+            $this->vatRateResolver->setCache($cache);
+        }
     }
 
     public function validateEuropeanVatNumber(string $vatNumber, string $countryCode): bool

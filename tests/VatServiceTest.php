@@ -5,6 +5,7 @@ namespace SandwaveIo\Vat\Tests;
 use Generator;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
+use Psr\SimpleCache\CacheInterface;
 use SandwaveIo\Vat\Countries\ResolvesCountries;
 use SandwaveIo\Vat\Vat;
 use SandwaveIo\Vat\VatNumbers\ValidatesVatNumbers;
@@ -86,5 +87,39 @@ final class VatServiceTest extends TestCase
         yield ['OM', true, false, 3.0, 0.0];
         yield ['CA', true, false, null, 0.0];
         yield ['XX', false, false, null, 0.0];
+    }
+
+    public function testWithoutCache(): void
+    {
+        $vat = new Vat();
+        // Get Vat::vatRateResolver property.
+        $vatReflection = new \ReflectionClass($vat);
+        $resolverProperty = $vatReflection->getProperty('vatRateResolver');
+        $resolverProperty->setAccessible(true);
+        $resolver = $resolverProperty->getValue($vat);
+        // Get TaxesEuropeDatabaseClient::cache property.
+        $resolverReflection = new \ReflectionClass($resolver);
+        $cacheProperty = $resolverReflection->getProperty('cache');
+        $cacheProperty->setAccessible(true);
+        $cache = $cacheProperty->getValue($resolver);
+
+        Assert::assertNull($cache);
+    }
+
+    public function testWithCache(): void
+    {
+        $vat = new Vat(null, null, null, $this->createStub(CacheInterface::class));
+        // Get Vat::vatRateResolver property.
+        $vatReflection = new \ReflectionClass($vat);
+        $resolverProperty = $vatReflection->getProperty('vatRateResolver');
+        $resolverProperty->setAccessible(true);
+        $resolver = $resolverProperty->getValue($vat);
+        // Get TaxesEuropeDatabaseClient::cache property.
+        $resolverReflection = new \ReflectionClass($resolver);
+        $cacheProperty = $resolverReflection->getProperty('cache');
+        $cacheProperty->setAccessible(true);
+        $cache = $cacheProperty->getValue($resolver);
+
+        Assert::assertInstanceOf(CacheInterface::class, $cache);
     }
 }
