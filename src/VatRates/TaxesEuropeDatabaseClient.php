@@ -16,12 +16,11 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
     const RATE_TYPE_STANDARD = 'STANDARD';
     const RATE_VALUE_TYPE_DEFAULT = 'DEFAULT';
 
-    private SoapClient $client;
     private ?CacheInterface $cache;
 
-    public function __construct(?SoapClient $client = null)
+    public function __construct(private ?SoapClient $client = null)
     {
-        $this->client = $client ?? new SoapClient(self::WSDL);
+        $this->client = $client;
         $this->cache = null;
     }
 
