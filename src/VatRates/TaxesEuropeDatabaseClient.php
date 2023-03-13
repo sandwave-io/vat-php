@@ -98,7 +98,7 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
             return $this->cache->get($cacheKey);
         }
         try {
-            $response = $this->client->__soapCall($call, $params);
+            $response = $this->getClient()->__soapCall($call, $params);
         } catch (SoapFault $fault) {
             throw new VatFetchFailedException(
                 'Could not fetch VAT rate from TEDB: ' . $fault->faultstring,
@@ -115,8 +115,8 @@ final class TaxesEuropeDatabaseClient implements ResolvesVatRates
     }
 
     /**
-     * @param string              $call
-     * @param array<string,array> $params
+     * @param string                     $call
+     * @param array<string,array<mixed>> $params
      *
      * @return string
      */
