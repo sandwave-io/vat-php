@@ -1,0 +1,3 @@
+CODEOWNERS @sandwave/team-infra @sandwave/circle-architecture
+/.gitlab/ @sandwave/team-infra
+*.gitlab-ci.yml @sandwave/team-infra
